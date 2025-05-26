@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Inicio - Notable Django{% endblock %}
+{% block content %}
+<div class="columns is-vcentered">
+  <div class="column is-one-third has-text-centered">
+    <figure class="image is-128x128 is-inline-block">
+      <img class="is-rounded" src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="Logo">
+    </figure>
+    <h2 class="title mt-3">¡Bienvenido a tu espacio de notas profesional!</h2>
+    <p class="subtitle">Organiza tus ideas, proyectos y tareas con estilo y eficiencia.</p>
+  </div>
+  <div class="column">
+    <div class="box">
+      <h3 class="title is-5">¿Qué puedes hacer?</h3>
+      <ul>
+        <li>📝 Crear, editar y eliminar notas con facilidad.</li>
+        <li>🔍 Buscar y filtrar tus notas.</li>
+        <li>📊 Ver estadísticas rápidas.</li>
+        <li>🔐 Gestionar desde el <a href="/admin/">panel de administración</a>.</li>
+        <li>⚡ Integrar con otras apps vía <a href="/api/note/">API REST</a>.</li>
+      </ul>
+      <div class="mt-4">
+        <a class="button is-primary is-medium" href="{% url 'note-list' %}"><i class="fas fa-sticky-note"></i>&nbsp;Ir a mis notas</a>
+        <a class="button is-link is-medium" href="/admin/"><i class="fas fa-cogs"></i>&nbsp;Admin</a>
+      </div>
+    </div>
+    <div class="notification is-info mt-4">
+      Actualmente tienes <strong>{{ note_count }}</strong> nota{{ note_count|pluralize }}.
+    </div>
+  </div>
+</div>
+{% endblock %}

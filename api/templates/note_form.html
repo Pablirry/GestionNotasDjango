@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block title %}{% if form.instance.pk %}Edit{% else %}Add{% endif %} Note - Notable Django{% endblock %}
+{% block title %}{% if form.instance.pk %}Editar{% else %}Nueva{% endif %} Nota - Notable Django{% endblock %}
 {% block content %}
-<h1 class="title">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Note</h1>
-<form method="post">{% csrf_token %}
+<h1 class="title">{% if form.instance.pk %}Editar{% else %}Nueva{% endif %} Nota</h1>
+<form method="post" class="box">{% csrf_token %}
   <div class="field">
     {{ form.as_p }}
   </div>
-  <button class="button is-success" type="submit">Save</button>
-  <a class="button" href="{% url 'note-list' %}">Cancel</a>
+  <button class="button is-success" type="submit"><i class="fas fa-save"></i>&nbsp;Guardar</button>
+  <a class="button" href="{% url 'note-list' %}">Cancelar</a>
 </form>
 {% endblock %}

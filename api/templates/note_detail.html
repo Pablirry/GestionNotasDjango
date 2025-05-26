@@ -3,8 +3,8 @@
 {% block content %}
 <h1 class="title">{{ object.title }}</h1>
 <p>{{ object.body }}</p>
-<p><small>Created at: {{ object.created_at|date:"Y-m-d H:i" }}</small></p>
-<a class="button" href="{% url 'note-list' %}">Back to list</a>
-<a class="button is-info" href="{% url 'note-edit' object.pk %}">Edit</a>
-<a class="button is-danger" href="{% url 'note-delete' object.pk %}">Delete</a>
+<p><small>Creada: {{ object.created_at|date:"Y-m-d H:i" }}</small></p>
+<a class="button" href="{% url 'note-list' %}">Volver</a>
+<a class="button is-info" href="{% url 'note-edit' object.pk %}"><i class="fas fa-edit"></i>&nbsp;Editar</a>
+<a class="button is-danger" href="{% url 'note-delete' object.pk %}"><i class="fas fa-trash"></i>&nbsp;Eliminar</a>
 {% endblock %}

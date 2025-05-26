@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Delete Note - Notable Django{% endblock %}
+{% block title %}Eliminar Nota - Notable Django{% endblock %}
 {% block content %}
-<h1 class="title">Delete Note</h1>
-<p>Are you sure you want to delete "<strong>{{ object.title }}</strong>"?</p>
+<h1 class="title">Eliminar Nota</h1>
+<p>¿Seguro que quieres eliminar "<strong>{{ object.title }}</strong>"?</p>
 <form method="post">{% csrf_token %}
-  <button class="button is-danger" type="submit">Yes, delete</button>
-  <a class="button" href="{% url 'note-list' %}">Cancel</a>
+  <button class="button is-danger" type="submit"><i class="fas fa-trash"></i>&nbsp;Sí, eliminar</button>
+  <a class="button" href="{% url 'note-list' %}">Cancelar</a>
 </form>
 {% endblock %}
