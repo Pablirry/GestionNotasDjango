@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Notes - Notable Django{% endblock %}
+{% block content %}
+<h1 class="title">Notes</h1>
+<form method="get" class="mb-4">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="q" placeholder="Search notes..." value="{{ request.GET.q }}">
+    </div>
+    <div class="control">
+      <button class="button is-info" type="submit">Search</button>
+    </div>
+    <div class="control">
+      <a class="button" href="{% url 'note-list' %}">Clear</a>
+    </div>
+  </div>
+</form>
+<a class="button is-primary mb-3" href="{% url 'note-add' %}">Add Note</a>
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Created</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for note in notes %}
+      <tr>
+        <td><a href="{% url 'note-detail' note.pk %}">{{ note.title }}</a></td>
+        <td>{{ note.created_at|date:"Y-m-d H:i" }}</td>
+        <td>
+          <a class="button is-small is-info" href="{% url 'note-edit' note.pk %}">Edit</a>
+          <a class="button is-small is-danger" href="{% url 'note-delete' note.pk %}">Delete</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="3">No notes found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+  {% if notes.has_previous %}
+    <a class="pagination-previous" href="?q={{ request.GET.q }}&page={{ notes.previous_page_number }}">Previous</a>
+  {% endif %}
+  {% if notes.has_next %}
+    <a class="pagination-next" href="?q={{ request.GET.q }}&page={{ notes.next_page_number }}">Next</a>
+  {% endif %}
+  <ul class="pagination-list">
+    {% for num in notes.paginator.page_range %}
+      {% if notes.number == num %}
+        <li><a class="pagination-link is-current">{{ num }}</a></li>
+      {% elif num > notes.number|add:'-3' and num < notes.number|add:'3' %}
+        <li><a class="pagination-link" href="?q={{ request.GET.q }}&page={{ num }}">{{ num }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</nav>
+{% endblock %}
