@@ -3,6 +3,18 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from .models import Note
 from .forms import NoteForm
 from django.contrib import messages
+import csv
+from django.http import HttpResponse
+
+def export_notes_csv(request):
+    notes = Note.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="notas.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Título', 'Contenido', 'Favorita', 'Creada'])
+    for note in notes:
+        writer.writerow([note.title, note.body, note.favorite, note.created_at])
+    return response
 
 class NoteListView(ListView):
     model = Note
@@ -13,8 +25,11 @@ class NoteListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('-created_at')
         q = self.request.GET.get('q')
+        order = self.request.GET.get('order')
         if q:
             queryset = queryset.filter(title__icontains=q) | queryset.filter(body__icontains=q)
+        if order == 'favorite':
+            queryset = queryset.order_by('-favorite', '-created_at')
         return queryset
 
 class NoteCreateView(CreateView):
